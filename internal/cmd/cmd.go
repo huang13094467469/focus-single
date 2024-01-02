@@ -85,6 +85,7 @@ var (
 					controller.Search,   // 搜索
 					controller.Captcha,  // 验证码
 					controller.User,     // 用户
+					controller.Cnnvd,    // cnnvd
 				)
 				// 权限控制路由
 				group.Group("/", func(group *ghttp.RouterGroup) {

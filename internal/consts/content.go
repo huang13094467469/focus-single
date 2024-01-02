@@ -10,4 +10,5 @@ const (
 	ContentTypeArticle     = "article"
 	ContentTypeAsk         = "ask"
 	ContentTypeTopic       = "topic"
+	CnnvdTypeArticle       = "cnnvd"
 )

@@ -112,6 +112,8 @@ func (s *sView) RenderTpl(ctx context.Context, tpl string, data ...model.View) {
 	// 内容模板
 	if viewData["MainTpl"] == nil {
 		viewData["MainTpl"] = s.getDefaultMainTpl(ctx)
+		fmt.Println("---------------")
+		fmt.Println(viewData["MainTpl"])
 	}
 	// 提示信息
 	if notice, _ := service.Session().GetNotice(ctx); notice != nil {

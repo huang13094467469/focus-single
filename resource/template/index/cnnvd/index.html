@@ -1,0 +1,59 @@
+<style>
+
+</style>
+<!--- main --->
+<div class="row gf-list">
+    <div class="col-md-9">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="btn btn-link {{if not $.Query.cate}}text-primary{{else}}text-secondary{{end}} top-node-btn btn-sm" href="/{{.ContentType}}?sort={{.Query.sort}}">全部</a>
+                {{range $index, $item := .BuildIn.CategoryTree .ContentType}}
+                <a class="btn btn-link {{if eq $.Query.cate $item.Id}}text-primary{{else}}text-secondary{{end}} top-node-btn btn-sm" href="/{{$.ContentType}}?cate={{$item.Id}}&sort={{$.Query.sort}}">{{$item.Name}}</a>
+                {{end}}
+            </li>
+
+            {{range $index, $item := .Data.List}}
+            <li class="list-group-item gf-list-item">
+                <div class="gf-list-item-img">
+                    <img src="https://i.loli.net/2020/06/13/4XaPUnEjpeVGfzt.jpg" style="height: 36px;width:36px;">
+                </div>
+                <div class="gf-list-item-text">
+                    <div class="float-left">
+                        <span class="badge badge-primary">{{$item.Cnnvd.CveId}}</span>
+                        <span class="badge badge-primary">{{$item.Cnnvd.Id}}</span>
+                        <span class="gf-list-item-title">
+                            <a  href="/cnnvd/detail?Id={{$item.Cnnvd.Id}}" target="_blank" style="color: #222;">{{$item.Cnnvd.Name}}</a>
+                        </span>
+                    </div>
+                    <div class="float-right">
+                        <span style="font-size: 12px;color: #ccc;text-align: right;">
+                            {{$item.Cnnvd.VulnType}}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{$item.Cnnvd.Severity}}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{$item.Cnnvd.Modified}}
+                        </span>
+                    </div>
+                </div>
+            </li>
+            {{end}}
+            {{if gt .Data.Total .Data.Size}}
+            <li class="list-group-item gf-list-item">
+                <ul class="pagination">
+                    {{.BuildIn.Page .Data.Total .Data.Size }}
+                </ul>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card gf-card" style="background: #fff;padding: 10px;">
+            <a class="btn btn-primary" href="/content/create?type={{.ContentType}}">发布内容</a>
+        </div>
+
+        {{include "index/index/page_link.html" .}}
+    </div>
+
+</div>

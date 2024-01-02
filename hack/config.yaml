@@ -12,7 +12,8 @@ gfcli:
   # dao生成
   gen:
     dao:
-      - link:            "mysql:root:12345678@tcp(127.0.0.1:3306)/focus"
-        removePrefix:    "gf_"
+      - link:            "mysql:root:root@tcp(192.168.2.150:23307)/focus"
+        removePrefix:    "as_"
         descriptionTag:  true
         noModelComment:  true
+        tables: "as_cnnvd"
