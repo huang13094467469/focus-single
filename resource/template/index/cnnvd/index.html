@@ -1,59 +1,64 @@
-<style>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</style>
-<!--- main --->
-<div class="row gf-list">
-    <div class="col-md-9">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a class="btn btn-link {{if not $.Query.cate}}text-primary{{else}}text-secondary{{end}} top-node-btn btn-sm" href="/{{.ContentType}}?sort={{.Query.sort}}">全部</a>
-                {{range $index, $item := .BuildIn.CategoryTree .ContentType}}
-                <a class="btn btn-link {{if eq $.Query.cate $item.Id}}text-primary{{else}}text-secondary{{end}} top-node-btn btn-sm" href="/{{$.ContentType}}?cate={{$item.Id}}&sort={{$.Query.sort}}">{{$item.Name}}</a>
-                {{end}}
-            </li>
+    <!-- Bootstrap 的 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-            {{range $index, $item := .Data.List}}
-            <li class="list-group-item gf-list-item">
-                <div class="gf-list-item-img">
-                    <img src="https://i.loli.net/2020/06/13/4XaPUnEjpeVGfzt.jpg" style="height: 36px;width:36px;">
-                </div>
-                <div class="gf-list-item-text">
-                    <div class="float-left">
-                        <span class="badge badge-primary">{{$item.Cnnvd.CveId}}</span>
-                        <span class="badge badge-primary">{{$item.Cnnvd.Id}}</span>
-                        <span class="gf-list-item-title">
-                            <a  href="/cnnvd/detail?Id={{$item.Cnnvd.Id}}" target="_blank" style="color: #222;">{{$item.Cnnvd.Name}}</a>
-                        </span>
-                    </div>
-                    <div class="float-right">
-                        <span style="font-size: 12px;color: #ccc;text-align: right;">
-                            {{$item.Cnnvd.VulnType}}
-                            &nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{$item.Cnnvd.Severity}}
-                            &nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{$item.Cnnvd.Modified}}
-                        </span>
-                    </div>
-                </div>
-            </li>
-            {{end}}
-            {{if gt .Data.Total .Data.Size}}
-            <li class="list-group-item gf-list-item">
-                <ul class="pagination">
-                    {{.BuildIn.Page .Data.Total .Data.Size }}
-                </ul>
-            </li>
-            {{end}}
-        </ul>
-    </div>
+    <title>Hello, world!</title>
+</head>
+<body>
+<!-- 选项 1：jQuery 和 Bootstrap 集成包（集成了 Popper） -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-7ymO4nGrkm372HoSbq1OY2DP4pEZnMiA+E0F3zPr+JQQtQ82gQ1HPY3QIVtztVua" crossorigin="anonymous"></script>
 
-    <div class="col-md-3">
-
-        <div class="card gf-card" style="background: #fff;padding: 10px;">
-            <a class="btn btn-primary" href="/content/create?type={{.ContentType}}">发布内容</a>
+    <form>
+        <div class="form-group">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
 
-        {{include "index/index/page_link.html" .}}
-    </div>
+        <button type="submit" class="btn btn-primary">查询</button>
+    </form>
 
-</div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">CNNVD编号</th>
+                <th scope="col">CVE编号</th>
+                <th scope="col">漏洞名称</th>
+                <th scope="col">漏洞类型</th>
+                <th scope="col">危害等级</th>
+                <th scope="col">更新时间</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $index, $item := .Data.List}}
+            <tr>
+                <th scope="row">{{$item.Cnnvd.CveId}}</th>
+                <td>{{$item.Cnnvd.Id}}</td>
+                <td>{{$item.Cnnvd.Name}}</td>
+                <td>{{$item.Cnnvd.VulnType}}</td>
+                <td>{{$item.Cnnvd.Severity}}</td>
+                <td>{{$item.Cnnvd.Modified}}</td>
+                <td>详情</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    <!--分页-->
+    {{if gt .Data.Total .Data.Size}}
+    <li class="list-group-item gf-list-item">
+        <ul class="pagination">
+            {{.BuildIn.Page .Data.Total .Data.Size }}
+        </ul>
+    </li>
+    {{end}}
+    </body>
+</html>

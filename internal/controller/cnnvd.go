@@ -2,7 +2,6 @@ package controller
 
 import (
 	"context"
-
 	"focus-single/api/v1"
 	"focus-single/internal/consts"
 	"focus-single/internal/model"

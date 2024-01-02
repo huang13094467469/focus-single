@@ -8,6 +8,11 @@ type CnnvdIndexReq struct {
 	g.Meta `path:"/cnnvd" method:"get" tags:"国家漏洞库" summary:"查询列表"`
 	CommonPaginationReq
 }
+
+type CnnvdIndex2Req struct {
+	g.Meta `path:"/cnnvd2" method:"get" tags:"国家漏洞库" summary:"查询列表"`
+	CommonPaginationReq
+}
 type CnnvdIndexRes struct {
 	ContentGetListCommonRes
 }
