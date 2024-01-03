@@ -16,8 +16,11 @@ type cCnnvd struct{}
 // Index article list
 func (a *cCnnvd) Index(ctx context.Context, req *v1.CnnvdIndexReq) (res *v1.CnnvdIndexRes, err error) {
 	getListRes, err := service.Cnnvd().GetList(ctx, model.CnnvdGetListInput{
-		Page: req.Page,
-		Size: req.Size,
+		Page:     req.Page,
+		Size:     req.Size,
+		Id:       req.Id,
+		Name:     req.Name,
+		Severity: req.Severity,
 	})
 	if err != nil {
 		return nil, err

@@ -27,12 +27,24 @@ func (s *sCnnvd) GetList(ctx context.Context, in model.CnnvdGetListInput) (out *
 		m = dao.Cnnvd.Ctx(ctx)
 	)
 	out = &model.CnnvdGetListOutput{
-		Page: in.Page,
-		Size: in.Size,
+		Page:     in.Page,
+		Size:     in.Size,
+		Id:       in.Id,
+		Name:     in.Name,
+		Severity: in.Severity,
 	}
 
 	// 分配查询
 	listModel := m.Page(in.Page, in.Size)
+	if in.Id != "" {
+		listModel.WhereLike("id", in.Id)
+	}
+	if in.Name != "" {
+		listModel.WhereLike("name", in.Name)
+	}
+	if in.Severity != "" {
+		listModel.WhereLike("severity", in.Severity)
+	}
 
 	// 执行查询
 	var list []*entity.Cnnvd

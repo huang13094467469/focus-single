@@ -15,16 +15,24 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-7ymO4nGrkm372HoSbq1OY2DP4pEZnMiA+E0F3zPr+JQQtQ82gQ1HPY3QIVtztVua" crossorigin="anonymous"></script>
 
-    <form>
-        <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+<form class="form-inline" style="padding-top: 10px;">
+    <div class="row">
+        <div class="col">
+            <input type="text" id="Id" value="{{.Data.Id}}" class="form-control w-auto" placeholder="请输入漏洞编码">
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control" id="exampleInputPassword1">
+        <div class="col">
+            <input type="text" id="Name" value="{{.Data.Name}}"class="form-control w-auto" placeholder="请输入漏洞名称">
+        </div>
+        <div class="col">
+            <input type="text" id="Severity" value="{{.Data.Severity}}" class="form-control w-auto" placeholder="请输入危害等级">
         </div>
 
-        <button type="submit" class="btn btn-primary">查询</button>
-    </form>
+        <button type="button"  id="btn-search" class="btn btn-primary btn-sm">查询</button>&nbsp;
+        <button type="button"  id="btn-all" class="btn btn-info btn-sm">全部</button>
+    </div>
+</form>
+<div style="padding: 15px;">
+
 
     <table class="table table-bordered">
         <thead>
@@ -52,13 +60,51 @@
             {{end}}
         </tbody>
     </table>
+
     <!--分页-->
     {{if gt .Data.Total .Data.Size}}
-    <li class="list-group-item gf-list-item">
-        <ul class="pagination">
-            {{.BuildIn.Page .Data.Total .Data.Size }}
-        </ul>
-    </li>
+    <ul class="pagination">
+        {{.BuildIn.Page .Data.Total .Data.Size }}
+    </ul>
     {{end}}
-    </body>
+</div>
+
+<script>
+    //page-link
+    $('#btn-search').click(function (){
+        var Id = $('#Id').val();
+        var Name = $('#Name').val();
+        var Severity = $('#Severity').val();
+        var pageNum = 1;
+
+        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity
+    })
+
+    $('#btn-all').click(function (){
+        var Id = "";
+        var Name = "";
+        var Severity = "";
+        var pageNum = 1;
+
+        $('#Id').val(Id);
+        $('#Name').val(Name);
+        $('#Severity').val(Severity);
+
+        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity
+    })
+
+
+    $(document).on('click', '.page-link', function(event) {
+        var Id = $('#Id').val();
+        var Name = $('#Name').val();
+        var Severity = $('#Severity').val();
+
+        var clickedElement = $(this);
+        var pageNum = clickedElement.text();
+        clickedElement.attr("href","/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity)
+    });
+
+</script>
+
+</body>
 </html>

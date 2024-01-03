@@ -12,14 +12,20 @@ type CnnvdGetListInput struct {
 	Size       int    // 分页数量，最大50
 	Sort       int    // 排序类型(0:最新, 默认。1:活跃, 2:热度)
 	UserId     uint   // 要查询的用户ID
+	Id         string
+	Name       string
+	Severity   string
 }
 
 // CnnvdGetListOutput 查询列表结果
 type CnnvdGetListOutput struct {
-	List  []CnnvdGetListOutputItem `json:"list" description:"列表"`
-	Page  int                      `json:"page" description:"分页码"`
-	Size  int                      `json:"size" description:"分页数量"`
-	Total int                      `json:"total" description:"数据总数"`
+	List     []CnnvdGetListOutputItem `json:"list" description:"列表"`
+	Page     int                      `json:"page" description:"分页码"`
+	Size     int                      `json:"size" description:"分页数量"`
+	Total    int                      `json:"total" description:"数据总数"`
+	Id       string
+	Name     string
+	Severity string
 }
 
 // CnnvdSearchInput 搜索列表

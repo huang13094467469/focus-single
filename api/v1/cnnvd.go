@@ -7,14 +7,16 @@ import (
 type CnnvdIndexReq struct {
 	g.Meta `path:"/cnnvd" method:"get" tags:"国家漏洞库" summary:"查询列表"`
 	CommonPaginationReq
+	Id       string `json:"id" in:"query"`
+	Name     string `json:"name" in:"query"`
+	Severity string `json:"severity" in:"query"`
 }
 
-type CnnvdIndex2Req struct {
-	g.Meta `path:"/cnnvd2" method:"get" tags:"国家漏洞库" summary:"查询列表"`
-	CommonPaginationReq
-}
 type CnnvdIndexRes struct {
 	ContentGetListCommonRes
+	Id       string
+	Name     string
+	Severity string
 }
 
 type CnnvdDetailReq struct {
