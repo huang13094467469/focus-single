@@ -18,7 +18,10 @@
 <form class="form-inline" style="padding-top: 10px;">
     <div class="row">
         <div class="col">
-            <input type="text" id="Id" value="{{.Data.Id}}" class="form-control w-auto" placeholder="请输入漏洞编码">
+            <input type="text" id="Id" value="{{.Data.Id}}" class="form-control w-auto" placeholder="请输入CNNVD编码">
+        </div>
+        <div class="col">
+            <input type="text" id="CveId" value="{{.Data.CveId}}" class="form-control w-auto" placeholder="请输入CVE编码">
         </div>
         <div class="col">
             <input type="text" id="Name" value="{{.Data.Name}}"class="form-control w-auto" placeholder="请输入漏洞名称">
@@ -49,8 +52,8 @@
         <tbody>
             {{range $index, $item := .Data.List}}
             <tr>
-                <th scope="row">{{$item.Cnnvd.CveId}}</th>
                 <td>{{$item.Cnnvd.Id}}</td>
+                <td>{{$item.Cnnvd.CveId}}</td>
                 <td>{{$item.Cnnvd.Name}}</td>
                 <td>{{$item.Cnnvd.VulnType}}</td>
                 <td>{{$item.Cnnvd.Severity}}</td>
@@ -73,35 +76,39 @@
     //page-link
     $('#btn-search').click(function (){
         var Id = $('#Id').val();
+        var CveId = $('#CveId').val();
         var Name = $('#Name').val();
         var Severity = $('#Severity').val();
         var pageNum = 1;
 
-        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity
+        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&CveId="+CveId+"&Name="+Name+"&Severity="+Severity
     })
 
     $('#btn-all').click(function (){
         var Id = "";
+        var CveId = "";
         var Name = "";
         var Severity = "";
         var pageNum = 1;
 
         $('#Id').val(Id);
+        $('#CveId').val(CveId);
         $('#Name').val(Name);
         $('#Severity').val(Severity);
 
-        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity
+        location.href="/cnnvd?page="+pageNum+"&Id="+Id+"&CveId="+CveId+"&Name="+Name+"&Severity="+Severity
     })
 
 
     $(document).on('click', '.page-link', function(event) {
         var Id = $('#Id').val();
+        var CveId = $('#CveId').val();
         var Name = $('#Name').val();
         var Severity = $('#Severity').val();
 
         var clickedElement = $(this);
         var pageNum = clickedElement.text();
-        clickedElement.attr("href","/cnnvd?page="+pageNum+"&Id="+Id+"&Name="+Name+"&Severity="+Severity)
+        clickedElement.attr("href","/cnnvd?page="+pageNum+"&Id="+Id+"&CveId="+CveId+"&Name="+Name+"&Severity="+Severity)
     });
 
 </script>

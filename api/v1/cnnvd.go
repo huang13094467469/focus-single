@@ -8,6 +8,7 @@ type CnnvdIndexReq struct {
 	g.Meta `path:"/cnnvd" method:"get" tags:"国家漏洞库" summary:"查询列表"`
 	CommonPaginationReq
 	Id       string `json:"id" in:"query"`
+	CveId    string `json:"cveId" in:"query"`
 	Name     string `json:"name" in:"query"`
 	Severity string `json:"severity" in:"query"`
 }
@@ -15,6 +16,7 @@ type CnnvdIndexReq struct {
 type CnnvdIndexRes struct {
 	ContentGetListCommonRes
 	Id       string
+	CveId    string
 	Name     string
 	Severity string
 }

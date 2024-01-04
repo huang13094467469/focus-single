@@ -13,6 +13,7 @@ type CnnvdGetListInput struct {
 	Sort       int    // 排序类型(0:最新, 默认。1:活跃, 2:热度)
 	UserId     uint   // 要查询的用户ID
 	Id         string
+	CveId      string
 	Name       string
 	Severity   string
 }
@@ -24,6 +25,7 @@ type CnnvdGetListOutput struct {
 	Size     int                      `json:"size" description:"分页数量"`
 	Total    int                      `json:"total" description:"数据总数"`
 	Id       string
+	CveId    string
 	Name     string
 	Severity string
 }

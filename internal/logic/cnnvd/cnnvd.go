@@ -4,7 +4,6 @@ import (
 	"context"
 	"focus-single/internal/dao"
 	"focus-single/internal/model"
-	"focus-single/internal/model/entity"
 	"focus-single/internal/service"
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/encoding/ghtml"
@@ -30,39 +29,38 @@ func (s *sCnnvd) GetList(ctx context.Context, in model.CnnvdGetListInput) (out *
 		Page:     in.Page,
 		Size:     in.Size,
 		Id:       in.Id,
+		CveId:    in.CveId,
 		Name:     in.Name,
 		Severity: in.Severity,
 	}
 
 	// 分配查询
 	listModel := m.Page(in.Page, in.Size)
+	query := g.Map{}
 	if in.Id != "" {
-		listModel.WhereLike("id", in.Id)
+		query["id like"] = "%" + in.Id + "%"
+	}
+	if in.CveId != "" {
+		query["cve_id like"] = "%" + in.CveId + "%"
 	}
 	if in.Name != "" {
-		listModel.WhereLike("name", in.Name)
+		query["name like"] = "%" + in.Name + "%"
 	}
 	if in.Severity != "" {
-		listModel.WhereLike("severity", in.Severity)
+		query["severity like"] = "%" + in.Severity + "%"
 	}
 
 	// 执行查询
-	var list []*entity.Cnnvd
-	if err := listModel.OrderDesc("modified").Scan(&list); err != nil {
+	if err := listModel.Where(query).OrderDesc("modified").ScanList(&out.List, "Cnnvd"); err != nil {
 		return out, err
 	}
-	// 没有数据
-	if len(list) == 0 {
-		return out, nil
-	}
-	out.Total, err = m.Count()
+	// 查询总数
+	out.Total, err = listModel.Where(query).Count()
 	if err != nil {
 		return out, err
 	}
 	// Cnnvd
-	if err := listModel.OrderDesc("modified").ScanList(&out.List, "Cnnvd"); err != nil {
-		return out, err
-	}
+
 	return
 }
 

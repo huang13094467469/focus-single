@@ -19,6 +19,7 @@ func (a *cCnnvd) Index(ctx context.Context, req *v1.CnnvdIndexReq) (res *v1.Cnnv
 		Page:     req.Page,
 		Size:     req.Size,
 		Id:       req.Id,
+		CveId:    req.CveId,
 		Name:     req.Name,
 		Severity: req.Severity,
 	})
